@@ -1,16 +1,23 @@
-const express=require('express');
+const express = require('express');
+const router = express.Router();
+// const cron = require('node-cron');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
 
-const router =express.Router();
-
-const Authorization=require("../middlewares/check-auth"); 
-
-const sensorDataController=require('../controllers/sensordataController')
 
 
-router.get("/hello",sensorDataController.hello);
-router.post("/posttest",sensorDataController.posttest);
-router.post("/sensordata",sensorDataController.sensordataHandler);
-router.get("/sensordata",sensorDataController.getdataHandler);
+const {
+  sensordataHandler,
+  storeddataHandler,
+  livedataHandler,
+} = require('../controllers/sensordataController');
 
+
+router.post('/sensordata', sensordataHandler); // To post  sensor data to server
+
+router.get('/storeddata', storeddataHandler); // to get by date and time from server
+
+router.get('/livedata', livedataHandler);  // To get live sensor data from server
 
 module.exports = router;
