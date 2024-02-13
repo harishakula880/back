@@ -30,6 +30,8 @@ const sensordataHandler = async (req, res) => {
         console.error(err);
         res.status(500).json({
             message: "Updating Data Failed",
+            error: err.message,
+
         });
     }
 };
@@ -92,7 +94,7 @@ const storeddataHandler = async (req, res) => {
             uv: sensordata.uv,
             timestamp: timestampIST,
         };
-
+   
         res.status(200).json({
             data: formattedData,
             timestamp: requestedMoment.toISOString(),
@@ -101,9 +103,11 @@ const storeddataHandler = async (req, res) => {
         console.error(err);
         return res.status(500).json({
             message: "Getting Data Failed",
+            error: err.message,
         });
-    }
+    }``
 };
+
 
 module.exports = {
     sensordataHandler,
